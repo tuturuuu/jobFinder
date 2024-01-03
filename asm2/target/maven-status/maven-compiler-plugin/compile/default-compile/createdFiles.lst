@@ -1,0 +1,11 @@
+com\asm2\dao\CategoryDao.class
+com\asm2\dao\CompanyDao.class
+com\asm2\controllers\AuthController.class
+com\asm2\controllers\MainPageController.class
+com\asm2\controllers\UserController.class
+com\asm2\controllers\RecruitmentController.class
+com\asm2\dao\UserDao.class
+com\asm2\beans\User.class
+com\asm2\beans\Company.class
+com\asm2\dao\RecruitmentDao.class
+com\asm2\beans\Recruitment.class

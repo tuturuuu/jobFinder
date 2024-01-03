@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+    	http://www.springframework.org/schema/beans/spring-beans.xsd
+    	http://www.springframework.org/schema/context
+    	http://www.springframework.org/schema/context/spring-context.xsd
+    	http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<!-- Step 3: Add support for component scanning -->
+	<context:component-scan base-package="com.asm2" />
+
+	<!-- Step 4: Add support for conversion, formatting and validation support -->
+	<mvc:resources mapping="/assets/**" location="/assets/"
+		cache-period="31556926" />
+	<mvc:annotation-driven />
+
+	<!-- Step 5: Define Spring MVC view resolver -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/view/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- Step 6: Set up for mySQL database -->
+	<bean id="ds"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="com.mysql.cj.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/asm2?serverTimezone=UTC" />
+		<property name="username" value="root" />
+		<property name="password" value="admin" />
+	</bean>
+
+	<bean id="jt" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="ds"></property>
+	</bean>
+
+	<bean id="userDao" class="com.asm2.dao.UserDao">
+		<property name="template" ref="jt"></property>
+	</bean>
+	
+	<bean id="companyDao" class="com.asm2.dao.CompanyDao">
+		<property name="template" ref="jt"></property>
+	</bean>
+	
+	<bean id="recruitmentDao" class="com.asm2.dao.RecruitmentDao">
+		<property name="template" ref="jt"></property>
+	</bean>
+		
+	<bean id="categoryDao" class="com.asm2.dao.CategoryDao">
+		<property name="template" ref="jt"></property>
+	</bean>
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSizePerFile" value="5242880" /> <!-- 5MB per file -->
+	</bean>
+
+</beans>
